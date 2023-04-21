@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class UNO {
@@ -55,6 +54,7 @@ public class UNO {
             while (!win) {
                 System.out.println("Zum Zug Starten, Start schreiben");
                 if("start" .equals(scanner.nextLine().toLowerCase())) {
+                    regel.aktuelleKarte(aktuelleKarte);
                     zug++;
                     int spieler = regel.reihenfolge();
                     spielerHand.zeigeHaende(spieler);
@@ -70,6 +70,7 @@ public class UNO {
                                 geht = false;
                             }else {
                                 while(geht == true) {
+                                    regel.aktuelleKarte(aktuelleKarte);
                                     System.out.println("karte wurde nicht gelegt");
                                     System.out.println("Weiterhin legen?(ja/nein)");
                                     if ("ja".equals(scanner.nextLine().toLowerCase())) {
@@ -91,6 +92,7 @@ public class UNO {
                         } else {
                             spielerHand.befuelleSpieleHand(spieler, deck, 1);
                             int size = spielerHand.spielerHaende.get(spieler).size();
+                            regel.aktuelleKarte(aktuelleKarte);
                             System.out.println("Gezogene Karte: " + spielerHand.spielerHaende.get(spieler).get(size - 1));
                             System.out.println("legen oder behalten?");
                             if ("legen".equals(scanner.nextLine().toLowerCase())) {
