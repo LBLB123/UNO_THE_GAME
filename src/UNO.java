@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class UNO {
@@ -12,6 +13,7 @@ public class UNO {
             deck.befuellen();
             deck.mischeHand();
             regel.reihenfolgeFestlegen();
+            regel.wunschFestlegen();
 
             //Spiler Namen Abfrage und Anzahl der Spieler
 
@@ -21,7 +23,7 @@ public class UNO {
             int PlayerAnzahl = 0;
             String Antwort;
             String PlayerNameInput;
-            String PlayerName[] = {"Joy Bot","Note Bot","Quick Bot","CyBot"};
+            String PlayerName[] = {"Joy Bot", "Note Bot", "Quick Bot", "CyBot"};
             for (index = 0; index < 4; ) {
                 PlayerAnzahl++;
                 PlayerNameInput = scanner.nextLine();
@@ -39,10 +41,12 @@ public class UNO {
             }
 
             SpielerHand spielerHand = new SpielerHand(PlayerName[0], PlayerName[1], PlayerName[2], PlayerName[3]);
-            spielerHand.befuelleSpieleHand(0,deck,7);
+            spielerHand.befuelleSpieleHand(0,deck,30);
             spielerHand.befuelleSpieleHand(1,deck,7);
             spielerHand.befuelleSpieleHand(2,deck,7);
             spielerHand.befuelleSpieleHand(3,deck,7);
+
+
 
 
             //GameLoop:
@@ -54,60 +58,63 @@ public class UNO {
             while (!win) {
                 System.out.println("Zum Zug Starten, Start schreiben");
                 if("start" .equals(scanner.nextLine().toLowerCase())) {
-                    regel.aktuelleKarte(aktuelleKarte);
+                    System.out.println("Die Aktuelle Karte: \n" + aktuelleKarte);
                     zug++;
                     int spieler = regel.reihenfolge();
                     spielerHand.zeigeHaende(spieler);
                     System.out.println("legen oder ziehen");
-                        if ("legen".equals(scanner.nextLine().toLowerCase())) {
-                            System.out.println("Welche Karte?(Index)");
-                            legeKarte = Integer.parseInt(scanner.nextLine());
-                            UnoKarte neueKarte = spielerHand.spielerHaende.get(spieler).get(legeKarte-1);
-                            geht = true;
-                            if (geht == regel.karteLegbar(aktuelleKarte, neueKarte,PlayerName)) {
-                                spielerHand.entferneKarteHand(spieler, legeKarte, deck, zug);
-                                System.out.println("karte wurde gelegt");
-                                geht = false;
-                            }else {
-                                while(geht == true) {
-                                    regel.aktuelleKarte(aktuelleKarte);
-                                    System.out.println("karte wurde nicht gelegt");
-                                    System.out.println("Weiterhin legen?(ja/nein)");
-                                    if ("ja".equals(scanner.nextLine().toLowerCase())) {
-                                        System.out.println("Welche Karte?(Index)");
-                                        legeKarte = Integer.parseInt(scanner.nextLine());
-                                        neueKarte = spielerHand.spielerHaende.get(spieler).get(legeKarte-1);
-                                        if (geht == regel.karteLegbar(aktuelleKarte, neueKarte,PlayerName)) {
-                                            spielerHand.entferneKarteHand(spieler, legeKarte, deck, zug);
-                                            System.out.println("karte wurde gelegt");
-                                            geht = false;
-                                        }
-                                    }else {
-                                        spielerHand.befuelleSpieleHand(spieler, deck, 1);
-                                        System.out.println("Karte wurde gezogen");
+                    if ("legen".equals(scanner.nextLine().toLowerCase())) {
+                        System.out.println("Welche Karte?(Index)");
+                        legeKarte = Integer.parseInt(scanner.nextLine());
+                        UnoKarte neueKarte = spielerHand.spielerHaende.get(spieler).get(legeKarte-1);
+                        geht = true;
+                        if (geht == regel.karteLegbar(aktuelleKarte, neueKarte,PlayerName, deck, spielerHand)) {
+                            spielerHand.entferneKarteHand(spieler, legeKarte, deck, zug);
+                            System.out.println("karte wurde gelegt");
+                            aktuelleKarte =neueKarte;
+                            geht = false;
+                        }else {
+                            while(geht == true) {
+                                System.out.println("Die Aktuelle Karte: \n" + aktuelleKarte);
+                                System.out.println("karte wurde nicht gelegt");
+                                System.out.println("Weiterhin legen?(ja/nein)");
+                                if ("ja".equals(scanner.nextLine().toLowerCase())) {
+                                    System.out.println("Welche Karte?(Index)");
+                                    legeKarte = Integer.parseInt(scanner.nextLine());
+                                    neueKarte = spielerHand.spielerHaende.get(spieler).get(legeKarte-1);
+                                    if (geht == regel.karteLegbar(aktuelleKarte, neueKarte,PlayerName,deck, spielerHand)) {
+                                        spielerHand.entferneKarteHand(spieler, legeKarte, deck, zug);
+                                        aktuelleKarte =neueKarte;
+                                        System.out.println("karte wurde gelegt");
                                         geht = false;
                                     }
-                                }
-                            }
-                        } else {
-                            spielerHand.befuelleSpieleHand(spieler, deck, 1);
-                            int size = spielerHand.spielerHaende.get(spieler).size();
-                            regel.aktuelleKarte(aktuelleKarte);
-                            System.out.println("Gezogene Karte: " + spielerHand.spielerHaende.get(spieler).get(size - 1));
-                            System.out.println("legen oder behalten?");
-                            if ("legen".equals(scanner.nextLine().toLowerCase())) {
-                                UnoKarte neueKarte = spielerHand.spielerHaende.get(spieler).get(size - 1);
-                                System.out.println(neueKarte);
-                                geht = true;
-                                if (geht == regel.karteLegbar(aktuelleKarte, neueKarte,PlayerName)) {
-                                    spielerHand.entferneKarteHand(spieler, size, deck, zug);
-                                    System.out.println("karte wurde gelegt");
-                                    geht = false;
                                 }else {
-                                    System.out.println("Karte wurde nicht gelegt");
+                                    spielerHand.befuelleSpieleHand(spieler, deck, 1);
+                                    System.out.println("Karte wurde gezogen");
+                                    geht = false;
                                 }
                             }
                         }
+                    } else {
+                        spielerHand.befuelleSpieleHand(spieler, deck, 1);
+                        int size = spielerHand.spielerHaende.get(spieler).size();
+                        System.out.println("Die Aktuelle Karte: \n" + aktuelleKarte);
+                        System.out.println("Gezogene Karte: " + spielerHand.spielerHaende.get(spieler).get(size - 1));
+                        System.out.println("legen oder behalten?");
+                        if ("legen".equals(scanner.nextLine().toLowerCase())) {
+                            UnoKarte neueKarte = spielerHand.spielerHaende.get(spieler).get(size - 1);
+                            System.out.println(neueKarte);
+                            geht = true;
+                            if (geht == regel.karteLegbar(aktuelleKarte, neueKarte,PlayerName, deck, spielerHand)) {
+                                spielerHand.entferneKarteHand(spieler, size, deck, zug);
+                                System.out.println("karte wurde gelegt");
+                                aktuelleKarte =neueKarte;
+                                geht = false;
+                            }else {
+                                System.out.println("Karte wurde nicht gelegt");
+                            }
+                        }
+                    }
                     if(spielerHand.spielerHaende.get(spieler).size() == 1){
                         System.out.println("Möchtest du Uno sagen?");
                         if("uno" .equals(scanner.nextLine().toLowerCase())){
@@ -121,8 +128,12 @@ public class UNO {
                     }
                 }
             }
+
+
+
+            //Game Loop
+
+
         }
     }
 }
-
-

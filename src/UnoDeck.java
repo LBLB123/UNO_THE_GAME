@@ -10,7 +10,7 @@ public class UnoDeck {
 
     public void fuegeKarteHinzu(UnoKarte karte) {
         hand.add(karte);
-        //Diese Methode fügt Karten in die UnoHand (Algemeine Deck) hinzu
+        //Diese Methode fügt Karten in die UnoDeck (Algemeine Deck) hinzu
     }
     public UnoKarte get(int index){
         return hand.get(index);
@@ -70,9 +70,9 @@ public class UnoDeck {
             fuegeKarteHinzu(new UnoKarte(farbe, Wert.Aussetzen));
             fuegeKarteHinzu(new UnoKarte(farbe, Wert.Zwei_Ziehen));
         }
-            fuegeKarteHinzu(new UnoKarte(Farbe.Wild, Wert.Multicolor));
-            fuegeKarteHinzu(new UnoKarte(Farbe.Wild, Wert.Wild_Draw_Four));
+        fuegeKarteHinzu(new UnoKarte(Farbe.Wild, Wert.Multicolor));
+        fuegeKarteHinzu(new UnoKarte(Farbe.Wild, Wert.Draw_Four));
 
-            //Diese Methode verbindet die Farben und die Zahlen der jeweiligen enums
+        //Diese Methode verbindet die Farben und die Zahlen der jeweiligen enums
     }
 }

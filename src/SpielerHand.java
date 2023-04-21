@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SpielerHand {
+public class SpielerHand{
     private String[] spielerNamen;
     public ArrayList<ArrayList<UnoKarte>> spielerHaende;
 
@@ -29,14 +29,14 @@ public class SpielerHand {
     }
 
     public void zeigeHaende(int indexSpieler) {
-            System.out.println(spielerNamen[indexSpieler] + ":");
-            int j = 1;
-            for (UnoKarte karte : spielerHaende.get(indexSpieler)) {
-                System.out.print("Index: " + j +"\t");
-                System.out.println(karte);
-                j++;
-            }
-            System.out.println();
+        System.out.println(spielerNamen[indexSpieler] + ":");
+        int j = 1;
+        for (UnoKarte karte : spielerHaende.get(indexSpieler)) {
+            System.out.print("Index: " + j +"\t");
+            System.out.println(karte);
+            j++;
+        }
+        System.out.println();
         //Diese Methode zeigt die Hand des Spielers
     }
     public void befuelleSpieleHand(int spielerIndex, UnoDeck hand, int anzahl){

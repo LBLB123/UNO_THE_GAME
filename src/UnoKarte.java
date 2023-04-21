@@ -27,6 +27,6 @@ enum Farbe {
 }
 
 enum Wert {
-    Null, Eins, Zwei, Drei, Vier, Fuenf, Sechs, Sieben, Acht, Neun, Aussetzen, Richtungswechsel, Zwei_Ziehen, Multicolor, Wild_Draw_Four
+    Null, Eins, Zwei, Drei, Vier, Fuenf, Sechs, Sieben, Acht, Neun, Aussetzen, Richtungswechsel, Zwei_Ziehen, Multicolor, Draw_Four
     //Das sind die eigenschaften der jeweiligen Karten
 }
