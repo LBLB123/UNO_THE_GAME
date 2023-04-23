@@ -16,10 +16,10 @@ public class Regelwerk {
         reihenfolge.add(3, 3);
     }
 
-    public UnoKarte ersteKarte(UnoDeck hand, int zug) {
+    public UnoKarte ersteKarte(UnoDeck hand, int zug, int anzahl) {
         if (zug == 1) {
             Random rand = new Random();
-            int n = rand.nextInt(53);
+            int n = rand.nextInt(anzahl);
             UnoKarte aktuellekarte = hand.get(n);
             System.out.println("Die Aktuelle Karte:");
             System.out.println(aktuellekarte);
@@ -45,6 +45,7 @@ public class Regelwerk {
 
     public boolean karteLegbar(UnoKarte aktuellekarte, UnoKarte neueKarte, String PlayerName[], UnoDeck deck, SpielerHand spielerHand) {
         if (color.size() == 2) {
+            System.out.println("Wunchfarbe: " + color.get(1));
             if ((color.get(1) == neueKarte.getFarbe()) || (color.get(0) == neueKarte.getFarbe())) {
                 color.remove(1);
                 return Lege(aktuellekarte, neueKarte, PlayerName, deck, spielerHand);
@@ -57,9 +58,9 @@ public class Regelwerk {
     }
 
     public boolean Lege(UnoKarte aktuellekarte, UnoKarte neueKarte,String PlayerName[], UnoDeck deck, SpielerHand spielerHand){
-        if ((aktuellekarte.getFarbe() == neueKarte.getFarbe()) || (Farbe.Wild == neueKarte.getFarbe()) || (Farbe.Wild != neueKarte.getFarbe())) {
+        if ((aktuellekarte.getFarbe() == neueKarte.getFarbe()) || (Farbe.Wild == neueKarte.getFarbe()) || ((aktuellekarte.getFarbe() == Farbe.Wild) && (Farbe.Wild != neueKarte.getFarbe()))) {
             if (neueKarte.getWert() == Wert.Zwei_Ziehen) {
-                zweiZiehen(PlayerName, deck, 2, spielerHand);
+                Ziehen(PlayerName, deck, 2, spielerHand);
             } else if (neueKarte.getWert() == Wert.Aussetzen) {
                 aussetzen();
             } else if (neueKarte.getWert() == Wert.Richtungswechsel) {
@@ -68,12 +69,12 @@ public class Regelwerk {
                 wunschFarbe();
             }else if (neueKarte.getWert() == Wert.Draw_Four) {
                 wunschFarbe();
-                zweiZiehen(PlayerName, deck, 4, spielerHand);
+                Ziehen(PlayerName, deck, 4, spielerHand);
             }
             return true;
-        } else if ((aktuellekarte.getWert() == neueKarte.getWert()) || (Farbe.Wild == neueKarte.getFarbe()) || (Farbe.Wild != neueKarte.getFarbe())) {
+        } else if ((aktuellekarte.getWert() == neueKarte.getWert()) || (Farbe.Wild == neueKarte.getFarbe()) || ((aktuellekarte.getFarbe() == Farbe.Wild) && (Farbe.Wild != neueKarte.getFarbe()))) {
             if (neueKarte.getWert() == Wert.Zwei_Ziehen) {
-                zweiZiehen(PlayerName, deck, 2, spielerHand);
+                Ziehen(PlayerName, deck, 2, spielerHand);
             } else if (neueKarte.getWert() == Wert.Aussetzen) {
                 aussetzen();
             } else if (neueKarte.getWert() == Wert.Richtungswechsel) {
@@ -82,13 +83,13 @@ public class Regelwerk {
                 wunschFarbe();
             }else if (neueKarte.getWert() == Wert.Draw_Four) {
                 wunschFarbe();
-                zweiZiehen(PlayerName, deck, 4, spielerHand);
+                Ziehen(PlayerName, deck, 4, spielerHand);
             }
             return true;
         }
         return false;
     }
-    public void zweiZiehen(String PlayerName[], UnoDeck deck, int anzahl,SpielerHand spielerHand){
+    public void Ziehen(String PlayerName[], UnoDeck deck, int anzahl,SpielerHand spielerHand){
         int spieler = reihenfolge.get(0);
         spielerHand.befuelleSpieleHand(spieler, deck, anzahl);
     }
@@ -114,7 +115,7 @@ public class Regelwerk {
         reihenfolge.add(zwischen);
     }
     public void wunschFarbe(){
-        System.out.println("Welche Farbe möchteswt du?(Gruen, Blau, Gelb, Rot");
+        System.out.println("Welche Farbe möchteswt du?(Gruen, Blau, Gelb, Rot)");
         switch (scanner.nextLine().toLowerCase()){
             case "gruen":
                 color.add(Farbe.Gruen);

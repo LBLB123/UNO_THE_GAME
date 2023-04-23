@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 
 public class UNO {
@@ -41,7 +40,7 @@ public class UNO {
             }
 
             SpielerHand spielerHand = new SpielerHand(PlayerName[0], PlayerName[1], PlayerName[2], PlayerName[3]);
-            spielerHand.befuelleSpieleHand(0,deck,30);
+            spielerHand.befuelleSpieleHand(0,deck,7);
             spielerHand.befuelleSpieleHand(1,deck,7);
             spielerHand.befuelleSpieleHand(2,deck,7);
             spielerHand.befuelleSpieleHand(3,deck,7);
@@ -52,9 +51,9 @@ public class UNO {
             //GameLoop:
             boolean win = false;
             int zug = 1;
-            UnoKarte aktuelleKarte = regel.ersteKarte(deck,zug);
+            UnoKarte aktuelleKarte = regel.ersteKarte(deck,zug,deck.hand.size());
             int legeKarte;
-            boolean geht = false;
+            boolean geht = false;   //Das boolean hilft bei der kontrolle ob die Karte legbar ist!!!!
             while (!win) {
                 System.out.println("Zum Zug Starten, Start schreiben");
                 if("start" .equals(scanner.nextLine().toLowerCase())) {
@@ -124,16 +123,12 @@ public class UNO {
                         }
                     }
                     if(spielerHand.spielerHaende.get(spieler).size() == 0){
+                        spielerHand.ranking();
                         win = true;
                     }
                 }
             }
-
-
-
-            //Game Loop
-
-
         }
     }
 }
+

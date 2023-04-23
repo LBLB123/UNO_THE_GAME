@@ -22,7 +22,7 @@ public class UnoDeck {
         //Diese Methode mischt die UnoHand
     }
 
-    public void zeigeHand() {
+    public void zeigeDeck() {
         for (UnoKarte karte : hand) {
             System.out.println(karte);
             //Diese Methode gibt das Array der UnoHand aus
@@ -65,14 +65,20 @@ public class UnoDeck {
             }
             for (int zahl = 0; zahl <= 9; zahl++) {
                 fuegeKarteHinzu(new UnoKarte(farbe, wertVonZahl(zahl)));
+                if (zahl != 0) {
+                    fuegeKarteHinzu(new UnoKarte(farbe, wertVonZahl(zahl)));
+                }
             }
-            fuegeKarteHinzu(new UnoKarte(farbe, Wert.Richtungswechsel));
-            fuegeKarteHinzu(new UnoKarte(farbe, Wert.Aussetzen));
-            fuegeKarteHinzu(new UnoKarte(farbe, Wert.Zwei_Ziehen));
+            for (int i = 0; i < 2; i++) {
+                fuegeKarteHinzu(new UnoKarte(farbe, Wert.Richtungswechsel));
+                fuegeKarteHinzu(new UnoKarte(farbe, Wert.Aussetzen));
+                fuegeKarteHinzu(new UnoKarte(farbe, Wert.Zwei_Ziehen));
+            }
         }
-        fuegeKarteHinzu(new UnoKarte(Farbe.Wild, Wert.Multicolor));
-        fuegeKarteHinzu(new UnoKarte(Farbe.Wild, Wert.Draw_Four));
-
+        for (int i = 0; i < 4; i++) {
+            fuegeKarteHinzu(new UnoKarte(Farbe.Wild, Wert.Multicolor));
+            fuegeKarteHinzu(new UnoKarte(Farbe.Wild, Wert.Draw_Four));
+        }
         //Diese Methode verbindet die Farben und die Zahlen der jeweiligen enums
     }
 }
