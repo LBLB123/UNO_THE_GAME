@@ -82,3 +82,4 @@ public class UnoDeck {
         //Diese Methode verbindet die Farben und die Zahlen der jeweiligen enums
     }
 }
+
